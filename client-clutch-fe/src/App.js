@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import defaultMessages from "./defaultMessages";
 import CallRepBubble from "./CallRepBubble";
 import CallerBubble from "./CallerBubble";
+import { getSecurityAnalysis } from "./api/common-service";
 
 function App() {
   const [messages, setMessages] = useState(defaultMessages);
@@ -28,6 +29,8 @@ function App() {
       scrollableDivRef.current.scrollTop =
         scrollableDivRef.current.scrollHeight;
     }
+    const latestMsg = messages[messages.length - 1].message;
+    getSecurityAnalysis(latestMsg).then((response) => console.log(response));
   }, [messages]);
 
   return (

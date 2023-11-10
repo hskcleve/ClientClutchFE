@@ -25,12 +25,12 @@ export default function CallerBubble({ msg, index }) {
           <img
             alt="box"
             className="h-8"
-            src={require("./Assets/custBox.png")}
+            src={require("./assets/custBox.png")}
           />
           <img
             alt="phone"
             className="h-4 relative right-6"
-            src={require("./Assets/custPhone.png")}
+            src={require("./assets/custPhone.png")}
           />
         </div>
       </div>
