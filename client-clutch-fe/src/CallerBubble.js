@@ -1,6 +1,4 @@
 import React from "react";
-import custBox from "./assets/custBox.png";
-import custPhone from "./assets/custPhone.png";
 
 export default function CallerBubble({ msg, index }) {
   function formatTimestamp(timestamp) {
@@ -24,8 +22,12 @@ export default function CallerBubble({ msg, index }) {
         </span>
         <span className="font-semibold">{`Customer (+65 9090 9090)`}</span>
         <div className="flex items-center w-8">
-          <img alt="box" className="h-8" src={custBox} />
-          <img alt="phone" className="h-4 relative right-6" src={custPhone} />
+          <img alt="box" className="h-8" src={require("./custbox.png")} />
+          <img
+            alt="phone"
+            className="h-4 relative right-6"
+            src={require("./custphone.png")}
+          />
         </div>
       </div>
       <span className={`flex-grow text-left`}>{msg.message}</span>
