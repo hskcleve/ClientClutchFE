@@ -1,4 +1,6 @@
 import React from "react";
+import repBox from "./assets/repBox.png";
+import repPhone from "./assets/repPhone.png";
 
 export default function CallRepBubble({ msg, index }) {
   function formatTimestamp(timestamp) {
@@ -22,12 +24,8 @@ export default function CallRepBubble({ msg, index }) {
         </span>
         <span className="font-semibold">Call Rep D192341</span>
         <div className="flex items-center w-8">
-          <img alt="box" className="h-8" src={require("./assets/repBox.png")} />
-          <img
-            alt="phone"
-            className="h-4 relative right-6"
-            src={require("./assets/repPhone.png")}
-          />
+          <img alt="box" className="h-8" src={repBox} />
+          <img alt="phone" className="h-4 relative right-6" src={repPhone} />
         </div>
       </div>
       <span className={`flex-grow text-right`}>{msg.message}</span>
