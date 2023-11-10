@@ -9,7 +9,7 @@ export default function Navbar() {
       <img
         alt="clientclutch logotype"
         className="h-8"
-        src={require("./Logo.png")}
+        src={require("./Assets/Logo.png")}
       />
       <span style={{ color: "rgba(106,106,159,100)" }}>Dashboard</span>
       <span>Live Analysis</span>
