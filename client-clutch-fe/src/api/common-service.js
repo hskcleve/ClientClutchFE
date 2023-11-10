@@ -13,7 +13,8 @@ const getSecurityAnalysis = (text) => {
   return fetch("https://client-clutch.vercel.app/api/security", requestOptions)
     .then((response) => response.text())
     .then((result) => {
-      return result;
+      //console.log(result);
+      return JSON.parse(result);
     })
     .catch((error) => console.log("error", error));
 };
@@ -33,7 +34,8 @@ const getSentimentAnalysis = (text) => {
   return fetch("https://client-clutch.vercel.app/api/sentiment", requestOptions)
     .then((response) => response.text())
     .then((result) => {
-      return result;
+      //console.log(result);
+      return JSON.parse(result);
     })
     .catch((error) => console.log("error", error));
 };
@@ -53,7 +55,8 @@ const getFraudAnalysis = (text) => {
   return fetch("https://client-clutch.vercel.app/api/fraud", requestOptions)
     .then((response) => response.text())
     .then((result) => {
-      return result;
+      //console.log(result);
+      return JSON.parse(result);
     })
     .catch((error) => console.log("error", error));
 };
@@ -76,7 +79,8 @@ const getComplianceConfidentialityAnalysis = (text) => {
   )
     .then((response) => response.text())
     .then((result) => {
-      return result;
+      //console.log(result);
+      return JSON.parse(result);
     })
     .catch((error) => console.log("error", error));
 };
@@ -99,7 +103,8 @@ const getReply = (text) => {
   )
     .then((response) => response.text())
     .then((result) => {
-      return result;
+      //console.log(result);
+      return JSON.parse(result);
     })
     .catch((error) => console.log("error", error));
 };
