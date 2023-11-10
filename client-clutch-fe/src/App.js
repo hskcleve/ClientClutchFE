@@ -6,12 +6,23 @@ import { useState, useRef, useEffect } from "react";
 import defaultMessages from "./defaultMessages";
 import CallRepBubble from "./CallRepBubble";
 import CallerBubble from "./CallerBubble";
-import { getSecurityAnalysis } from "./api/common-service";
+import {
+  getComplianceConfidentialityAnalysis,
+  getFraudAnalysis,
+  getReply,
+  getSecurityAnalysis,
+  getSentimentAnalysis,
+} from "./api/common-service";
 
 function App() {
   const [messages, setMessages] = useState(defaultMessages);
   const [inputMessage, setInputMessage] = useState("");
   const scrollableDivRef = useRef(null);
+  const [securityAnalysis, setSecurityAnalysis] = useState("");
+  const [fraudAnalysis, setFraudAnalysis] = useState("");
+  const [compliConfiAnalysis, setCompliConfiAnalysis] = useState("");
+  const [sentimentAnalysis, setSentimentAnalysis] = useState("");
+  const [recommendedActions, setRecommendedActions] = useState("");
 
   const handleInputKeyPress = (event) => {
     if (event.key === "Enter" && inputMessage.trim() !== "") {
@@ -29,8 +40,38 @@ function App() {
       scrollableDivRef.current.scrollTop =
         scrollableDivRef.current.scrollHeight;
     }
-    const latestMsg = messages[messages.length - 1].message;
-    getSecurityAnalysis(latestMsg).then((response) => console.log(response));
+    if (messages.length > 0 && messages.length % 2 == 1) {
+      const latestMsg = messages[messages.length - 1].message;
+      getSecurityAnalysis(latestMsg).then((response) => {
+        setSecurityAnalysis(
+          response.result && String(response.result).includes("\n")
+            ? ""
+            : response.result
+        );
+      });
+      getFraudAnalysis(latestMsg).then((response) =>
+        setFraudAnalysis(
+          response.result && String(response.result).includes("\n")
+            ? ""
+            : response.result
+        )
+      );
+      getComplianceConfidentialityAnalysis(latestMsg).then((response) =>
+        setCompliConfiAnalysis(
+          response.result && String(response.result).includes("\n")
+            ? ""
+            : response.result
+        )
+      );
+      getSentimentAnalysis(latestMsg).then((response) => {
+        setSentimentAnalysis(
+          response.result && String(response.result).includes("\n")
+            ? ""
+            : response.result
+        );
+        setRecommendedActions(response.recommended_actions);
+      });
+    }
   }, [messages]);
 
   return (
@@ -40,7 +81,14 @@ function App() {
       <div className="flex px-10 pb-8 justify-around flex-grow gap-5">
         <div className="flex flex-1">
           <Tile
-            tileTitle="Transcription"
+            tileTitle={
+              <>
+                Transcription{" "}
+                <span className="tracking-tighter text-xs ml-2 text-red-500">
+                  <span className="text-3xl relative top-1">•</span> LIVE
+                </span>
+              </>
+            }
             children={
               <div className="flex flex-col justify-between h-full">
                 <div
@@ -76,23 +124,95 @@ function App() {
                     onKeyPress={handleInputKeyPress}
                   />
                 </div>
-                <span
-                  className="text-xs hover:underline hover:cursor-pointer"
-                  onClick={() => {
-                    setMessages(defaultMessages);
-                  }}
-                >
-                  {`[X] Reset simulated chat`}
-                </span>
+                <div className="flex justify-between w-full">
+                  <span
+                    className="text-xs hover:underline hover:cursor-pointer"
+                    onClick={() => {
+                      setMessages(defaultMessages);
+                    }}
+                  >
+                    {`Reset simulated chat`}
+                  </span>
+                  <span
+                    className="text-xs hover:underline hover:cursor-pointer"
+                    onClick={() => {
+                      setMessages([]);
+                    }}
+                  >
+                    {`Clear simulated chat`}
+                  </span>
+                </div>
               </div>
             }
           />
         </div>
         <div className="flex flex-1 flex-col gap-5">
-          <Tile tileTitle="Security and Fraud Alerts" />
-          <Tile tileTitle="Compliance and Information Confidentiality" />
-          <Tile tileTitle="Sentiment and Speech Analysis" />
-          <Tile tileTitle="Recommendations" />
+          <Tile
+            tileTitle="Security and Fraud Alerts"
+            children={
+              securityAnalysis || fraudAnalysis ? (
+                <div className="flex h-full pt-5">
+                  <ul>
+                    <li>{securityAnalysis}</li>
+                    <li>{fraudAnalysis}</li>
+                  </ul>
+                </div>
+              ) : (
+                <div className="flex h-full pt-5">
+                  <ul>
+                    <li>Nothing to report.</li>
+                  </ul>
+                </div>
+              )
+            }
+          />
+          <Tile
+            tileTitle="Compliance and Information Confidentiality"
+            children={
+              compliConfiAnalysis ? (
+                <div className="flex h-full pt-5">
+                  <ul>
+                    <li>{compliConfiAnalysis}</li>
+                  </ul>{" "}
+                </div>
+              ) : (
+                <div className="flex h-full pt-5">
+                  <ul>
+                    <li>Nothing to report.</li>
+                  </ul>
+                </div>
+              )
+            }
+          />
+          <Tile
+            tileTitle="Sentiment and Speech Analysis"
+            children={
+              sentimentAnalysis ? (
+                <div className="flex h-full pt-5">
+                  <ul>
+                    <li>{sentimentAnalysis}</li>
+                  </ul>{" "}
+                </div>
+              ) : (
+                <div className="flex h-full pt-5">
+                  <ul>
+                    <li>Nothing to report.</li>
+                  </ul>
+                </div>
+              )
+            }
+          />
+          <Tile
+            tileTitle="Recommendations"
+            children={
+              <div className="flex h-full pt-5">
+                <ul>
+                  <li>{recommendedActions[0]}</li>
+                  <li>{recommendedActions[1]}</li>
+                </ul>{" "}
+              </div>
+            }
+          />
         </div>
       </div>
       <Footer />
