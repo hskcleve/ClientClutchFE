@@ -9,7 +9,6 @@ import CallerBubble from "./CallerBubble";
 import {
   getComplianceConfidentialityAnalysis,
   getFraudAnalysis,
-  getReply,
   getSecurityAnalysis,
   getSentimentAnalysis,
 } from "./api/common-service";
@@ -40,7 +39,7 @@ function App() {
       scrollableDivRef.current.scrollTop =
         scrollableDivRef.current.scrollHeight;
     }
-    if (messages.length > 0 && messages.length % 2 == 1) {
+    if (messages.length > 0 && messages.length % 2 === 1) {
       const latestMsg = messages[messages.length - 1].message;
       getSecurityAnalysis(latestMsg).then((response) => {
         setSecurityAnalysis(
