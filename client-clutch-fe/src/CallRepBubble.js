@@ -22,11 +22,11 @@ export default function CallRepBubble({ msg, index }) {
         </span>
         <span className="font-semibold">Call Rep D192341</span>
         <div className="flex items-center w-8">
-          <img alt="box" className="h-8" src={require("./Assets/repBox.png")} />
+          <img alt="box" className="h-8" src={require("./assets/repBox.png")} />
           <img
             alt="phone"
             className="h-4 relative right-6"
-            src={require("./Assets/repPhone.png")}
+            src={require("./assets/repPhone.png")}
           />
         </div>
       </div>
