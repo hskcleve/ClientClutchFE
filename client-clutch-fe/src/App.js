@@ -78,7 +78,7 @@ function App() {
       <Navbar />
       <Title title="Live Analysis" />
       <div className="flex px-10 pb-8 justify-around flex-grow gap-5 flex-col items-center lg:items-stretch lg:flex-row">
-        <div className="flex max-w-sm lg:flex-1 sm:max-w-none">
+        <div className="flex w-full lg:flex-1">
           <Tile
             tileTitle={
               <>
@@ -123,7 +123,7 @@ function App() {
                     onKeyPress={handleInputKeyPress}
                   />
                 </div>
-                <div className="justify-between w-full flex">
+                <div className="justify-between w-full flex mt-3">
                   <span
                     className="text-xs hover:underline hover:cursor-pointer hidden sm:block"
                     onClick={() => {
@@ -163,19 +163,19 @@ function App() {
             }
           />
         </div>
-        <div className="flex max-w-sm lg:flex-1 sm:max-w-none flex-col gap-5">
+        <div className="flex lg:flex-1 w-full flex-col gap-5">
           <Tile
             tileTitle="Security and Fraud Alerts"
             children={
               securityAnalysis || fraudAnalysis ? (
-                <div className="flex h-full pt-5 text-xs sm:text-sm">
+                <div className="flex h-full pt-5 text-xs sm:text-sm text-gray-500">
                   <ul>
                     <li>{securityAnalysis}</li>
                     <li>{fraudAnalysis}</li>
                   </ul>
                 </div>
               ) : (
-                <div className="flex h-full pt-5 text-xs sm:text-sm">
+                <div className="flex h-full pt-5 text-xs sm:text-sm text-gray-500">
                   <ul>
                     <li>Nothing to report.</li>
                   </ul>
@@ -187,13 +187,13 @@ function App() {
             tileTitle="Compliance and Information Confidentiality"
             children={
               compliConfiAnalysis ? (
-                <div className="flex h-full pt-5 text-xs sm:text-sm">
+                <div className="flex h-full pt-5 text-xs sm:text-sm text-gray-500">
                   <ul>
                     <li>{compliConfiAnalysis}</li>
                   </ul>{" "}
                 </div>
               ) : (
-                <div className="flex h-full pt-5 text-xs sm:text-sm">
+                <div className="flex h-full pt-5 text-xs sm:text-sm text-gray-500">
                   <ul>
                     <li>Nothing to report.</li>
                   </ul>
@@ -205,13 +205,13 @@ function App() {
             tileTitle="Sentiment and Speech Analysis"
             children={
               sentimentAnalysis ? (
-                <div className="flex h-full pt-5 text-xs sm:text-sm">
+                <div className="flex h-full pt-5 text-xs sm:text-sm text-gray-500">
                   <ul>
                     <li>{sentimentAnalysis}</li>
                   </ul>{" "}
                 </div>
               ) : (
-                <div className="flex h-full pt-5 text-xs sm:text-sm">
+                <div className="flex h-full pt-5 text-xs sm:text-sm text-gray-500">
                   <ul>
                     <li>Nothing to report.</li>
                   </ul>
@@ -222,7 +222,7 @@ function App() {
           <Tile
             tileTitle="Recommendations"
             children={
-              <div className="flex h-full pt-5 text-xs sm:text-sm">
+              <div className="flex h-full pt-5 text-xs sm:text-sm text-gray-500">
                 <ul>
                   <li>{recommendedActions[0]}</li>
                   <li>{recommendedActions[1]}</li>
