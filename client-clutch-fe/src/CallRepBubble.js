@@ -20,17 +20,21 @@ export default function CallRepBubble({ msg, index }) {
         <span className=" text-gray-500 font-light text-xs">
           {formatTimestamp(msg.timestamp)}
         </span>
-        <span className="font-semibold">Call Rep D192341</span>
-        <div className="flex items-center w-8">
-          <img alt="box" className="h-8" src={require("./repbox.png")} />
+        <span className="font-semibold text-xs sm:text-sm">
+          Call Rep D192341
+        </span>
+        <div className="flex items-center w-7 md:w-8">
+          <img alt="box" className="h-4 md:h-8" src={require("./repbox.png")} />
           <img
             alt="phone"
-            className="h-4 relative right-6"
+            className="h-2 md:h-4 relative right-3 md:right-6"
             src={require("./repphone.png")}
           />
         </div>
       </div>
-      <span className={`flex-grow text-right`}>{msg.message}</span>
+      <span className={`flex-grow text-right text-xs md:text-sm`}>
+        {msg.message}
+      </span>
     </div>
   );
 }

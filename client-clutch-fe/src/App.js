@@ -77,8 +77,8 @@ function App() {
     <div className="bg-black min-h-screen flex flex-col justify-between">
       <Navbar />
       <Title title="Live Analysis" />
-      <div className="flex px-10 pb-8 justify-around flex-grow gap-5">
-        <div className="flex flex-1">
+      <div className="flex px-10 pb-8 justify-around flex-grow gap-5 flex-col items-center lg:items-stretch lg:flex-row">
+        <div className="flex max-w-sm lg:flex-1 sm:max-w-none">
           <Tile
             tileTitle={
               <>
@@ -107,7 +107,7 @@ function App() {
                 </div>
                 <div className="flex">
                   <input
-                    className={`w-full p-2 border rounded-md outline-none bg-transparent ${
+                    className={`w-full p-2 text-xs sm:text-sm border rounded-md outline-none bg-transparent ${
                       messages.length % 2 === 0
                         ? "border-purple-500"
                         : "border-blue-500"
@@ -123,9 +123,9 @@ function App() {
                     onKeyPress={handleInputKeyPress}
                   />
                 </div>
-                <div className="flex justify-between w-full">
+                <div className="justify-between w-full flex">
                   <span
-                    className="text-xs hover:underline hover:cursor-pointer"
+                    className="text-xs hover:underline hover:cursor-pointer hidden sm:block"
                     onClick={() => {
                       setMessages(defaultMessages);
                     }}
@@ -133,31 +133,49 @@ function App() {
                     {`Reset simulated chat`}
                   </span>
                   <span
-                    className="text-xs hover:underline hover:cursor-pointer"
+                    className="text-xs hover:underline hover:cursor-pointer hidden sm:block"
                     onClick={() => {
                       setMessages([]);
                     }}
                   >
                     {`Clear simulated chat`}
                   </span>
+                  <div className="justify-between w-full flex sm:hidden">
+                    <span
+                      className="text-xs hover:underline hover:cursor-pointer"
+                      onClick={() => {
+                        setMessages(defaultMessages);
+                      }}
+                    >
+                      {`Reset`}
+                    </span>
+                    <span
+                      className="text-xs hover:underline hover:cursor-pointer"
+                      onClick={() => {
+                        setMessages([]);
+                      }}
+                    >
+                      {`Clear`}
+                    </span>
+                  </div>
                 </div>
               </div>
             }
           />
         </div>
-        <div className="flex flex-1 flex-col gap-5">
+        <div className="flex max-w-sm lg:flex-1 sm:max-w-none flex-col gap-5">
           <Tile
             tileTitle="Security and Fraud Alerts"
             children={
               securityAnalysis || fraudAnalysis ? (
-                <div className="flex h-full pt-5">
+                <div className="flex h-full pt-5 text-xs sm:text-sm">
                   <ul>
                     <li>{securityAnalysis}</li>
                     <li>{fraudAnalysis}</li>
                   </ul>
                 </div>
               ) : (
-                <div className="flex h-full pt-5">
+                <div className="flex h-full pt-5 text-xs sm:text-sm">
                   <ul>
                     <li>Nothing to report.</li>
                   </ul>
@@ -169,13 +187,13 @@ function App() {
             tileTitle="Compliance and Information Confidentiality"
             children={
               compliConfiAnalysis ? (
-                <div className="flex h-full pt-5">
+                <div className="flex h-full pt-5 text-xs sm:text-sm">
                   <ul>
                     <li>{compliConfiAnalysis}</li>
                   </ul>{" "}
                 </div>
               ) : (
-                <div className="flex h-full pt-5">
+                <div className="flex h-full pt-5 text-xs sm:text-sm">
                   <ul>
                     <li>Nothing to report.</li>
                   </ul>
@@ -187,13 +205,13 @@ function App() {
             tileTitle="Sentiment and Speech Analysis"
             children={
               sentimentAnalysis ? (
-                <div className="flex h-full pt-5">
+                <div className="flex h-full pt-5 text-xs sm:text-sm">
                   <ul>
                     <li>{sentimentAnalysis}</li>
                   </ul>{" "}
                 </div>
               ) : (
-                <div className="flex h-full pt-5">
+                <div className="flex h-full pt-5 text-xs sm:text-sm">
                   <ul>
                     <li>Nothing to report.</li>
                   </ul>
@@ -204,7 +222,7 @@ function App() {
           <Tile
             tileTitle="Recommendations"
             children={
-              <div className="flex h-full pt-5">
+              <div className="flex h-full pt-5 text-xs sm:text-sm">
                 <ul>
                   <li>{recommendedActions[0]}</li>
                   <li>{recommendedActions[1]}</li>

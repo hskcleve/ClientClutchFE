@@ -16,21 +16,27 @@ export default function CallerBubble({ msg, index }) {
       className="flex flex-col font-extralight text-sm rounded-lg py-5 px-5 gap-5"
       //style={{ backgroundColor: "rgba(0,0,0,0.27)" }}
     >
-      <div className="flex gap-3 items-center justify-end flex-row-reverse">
+      <div className="flex gap-1 sm:gap-3 items-center justify-end flex-row-reverse">
         <span className=" text-gray-500 font-light text-xs">
           {formatTimestamp(msg.timestamp)}
         </span>
-        <span className="font-semibold">{`Customer (+65 9090 9090)`}</span>
-        <div className="flex items-center w-8">
-          <img alt="box" className="h-8" src={require("./custbox.png")} />
+        <span className="font-semibold text-xs sm:text-sm">{`Customer (+65 9090 9090)`}</span>
+        <div className="flex items-center w-7 md:w-8">
+          <img
+            alt="box"
+            className="h-4 md:h-8"
+            src={require("./custbox.png")}
+          />
           <img
             alt="phone"
-            className="h-4 relative right-6"
+            className="h-2 md:h-4 relative right-3 md:right-6"
             src={require("./custphone.png")}
           />
         </div>
       </div>
-      <span className={`flex-grow text-left`}>{msg.message}</span>
+      <span className={`flex-grow text-left text-xs md:text-sm`}>
+        {msg.message}
+      </span>
     </div>
   );
 }
