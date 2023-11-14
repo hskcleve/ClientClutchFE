@@ -12,6 +12,8 @@ import {
   getSecurityAnalysis,
   getSentimentAnalysis,
 } from "./api/common-service";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [messages, setMessages] = useState(defaultMessages);
@@ -42,40 +44,58 @@ function App() {
     if (messages.length > 0 && messages.length % 2 === 1) {
       const latestMsg = messages[messages.length - 1].message;
       getSecurityAnalysis(latestMsg).then((response) => {
-        setSecurityAnalysis(
-          response.result && String(response.result).includes("\n")
-            ? ""
-            : response.result
-        );
+        if (response.error) notify();
+        else
+          setSecurityAnalysis(
+            response.result && String(response.result).includes("\n")
+              ? ""
+              : response.result
+          );
       });
-      getFraudAnalysis(latestMsg).then((response) =>
-        setFraudAnalysis(
-          response.result && String(response.result).includes("\n")
-            ? ""
-            : response.result
-        )
-      );
-      getComplianceConfidentialityAnalysis(latestMsg).then((response) =>
-        setCompliConfiAnalysis(
-          response.result && String(response.result).includes("\n")
-            ? ""
-            : response.result
-        )
-      );
+      getFraudAnalysis(latestMsg).then((response) => {
+        if (response.error) notify();
+        else
+          setFraudAnalysis(
+            response.result && String(response.result).includes("\n")
+              ? ""
+              : response.result
+          );
+      });
+      getComplianceConfidentialityAnalysis(latestMsg).then((response) => {
+        if (response.error) notify();
+        else
+          setCompliConfiAnalysis(
+            response.result && String(response.result).includes("\n")
+              ? ""
+              : response.result
+          );
+      });
       getSentimentAnalysis(latestMsg).then((response) => {
-        setSentimentAnalysis(
-          response.result && String(response.result).includes("\n")
-            ? ""
-            : response.result
-        );
+        if (response.error) notify();
+        else
+          setSentimentAnalysis(
+            response.result && String(response.result).includes("\n")
+              ? ""
+              : response.result
+          );
         setRecommendedActions(response.recommended_actions);
       });
     }
   }, [messages]);
 
+  const notify = () =>
+    toast("Cost-incurring API Key disabled. Analysis will not work.", {
+      theme: "dark",
+      closeOnClick: true,
+      pauseOnHover: true,
+      autoClose: false,
+      toastId: "single-toast-only",
+    });
+
   return (
     <div className="bg-black min-h-screen flex flex-col justify-between">
       <Navbar />
+      <ToastContainer />
       <Title title="Live Analysis" />
       <div className="flex px-10 pb-8 justify-around flex-grow gap-5 flex-col items-center lg:items-stretch lg:flex-row">
         <div className="flex w-full lg:flex-1">
@@ -222,12 +242,20 @@ function App() {
           <Tile
             tileTitle="Recommendations"
             children={
-              <div className="flex h-full pt-5 text-xs sm:text-sm text-gray-500">
-                <ul>
-                  <li>{recommendedActions[0]}</li>
-                  <li>{recommendedActions[1]}</li>
-                </ul>{" "}
-              </div>
+              recommendedActions && recommendedActions.length > 1 ? (
+                <div className="flex h-full pt-5 text-xs sm:text-sm text-gray-500">
+                  <ul>
+                    <li>{recommendedActions[0]}</li>
+                    <li>{recommendedActions[1]}</li>
+                  </ul>{" "}
+                </div>
+              ) : (
+                <div className="flex h-full pt-5 text-xs sm:text-sm text-gray-500">
+                  <ul>
+                    <li>Nothing to report.</li>
+                  </ul>
+                </div>
+              )
             }
           />
         </div>
